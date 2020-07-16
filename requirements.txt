@@ -1,0 +1,11 @@
+# @title Install necessary packages.
+!pip install --upgrade --no-cache-dir dopamine-rl
+!pip install cmake
+!pip install atari_py
+!pip install gin-config
+!pip install matplotlib
+!pip install numpy
+!pip install pillow
+!pip install pygame
+!pip install scipy
+!pip install tensorflow

@@ -1,0 +1,24 @@
+# @title Download an example checkpoint (Rainbow on SpaceInvaders)
+!gsutil -q -m cp -R gs://download-dopamine-rl/colab/samples/rainbow/SpaceInvaders_v4/checkpoints/tf_ckpt-199.data-00000-of-00001 /tmp
+!gsutil -q -m cp -R gs://download-dopamine-rl/colab/samples/rainbow/SpaceInvaders_v4/checkpoints/tf_ckpt-199.index /tmp
+!gsutil -q -m cp -R gs://download-dopamine-rl/colab/samples/rainbow/SpaceInvaders_v4/checkpoints/tf_ckpt-199.meta /tmp
+
+
+
+
+# @title Generate the video
+from dopamine.utils import example_viz_lib
+num_steps = 1000  # @param {type:"number"}
+example_viz_lib.run(agent='rainbow', game='SpaceInvaders', num_steps=num_steps,
+                    root_dir='/tmp/agent_viz', restore_ckpt='/tmp/tf_ckpt-199')
+
+
+# @title Display the video
+import base64
+from IPython.display import HTML
+base_dir = '/tmp/agent_viz/agent_viz/SpaceInvaders/rainbow'
+video = open('{}/images/video.mp4'.format(base_dir), 'rb').read()
+encoded = base64.b64encode(video)
+HTML(data='''<video alt="test" controls>
+                <source src="data:video/mp4;base64,{0}" type="video/mp4" />
+             </video>'''.format(encoded.decode('ascii')))
